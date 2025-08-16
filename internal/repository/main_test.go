@@ -8,7 +8,6 @@ import (
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
-	"github.com/spf13/viper"
 )
 
 var globalTestDB *sqlx.DB
@@ -53,9 +52,6 @@ func getConnectParam() (string, string, error) {
 	if err := godotenv.Load("../../.env"); err != nil && !os.IsNotExist(err) {
 		return "", "", fmt.Errorf("failed to load .env file: %w", err)
 	}
-
-	v := viper.New()
-	v.AutomaticEnv()
 
 	driver := os.Getenv("DB_DRIVER")
 	port := os.Getenv("DB_PORT")
