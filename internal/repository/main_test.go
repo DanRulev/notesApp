@@ -57,15 +57,18 @@ func getConnectParam() (string, string, error) {
 	v := viper.New()
 	v.AutomaticEnv()
 
-	driver := v.GetString("DB_DRIVER")
-	dsn := v.GetString("DB_DSN")
+	driver := viper.GetString("DB_DRIVER")
+	host := "localhost"
+	port := viper.GetString("DB_PORT")
+	name := viper.GetString("DB_NAME")
+	user := viper.GetString("DB_USER")
+	password := viper.GetString("DB_PASSWORD")
 
-	if driver == "" {
-		return "", "", fmt.Errorf("DB_DRIVER is not set")
+	if driver == "" || port == "" || name == "" || user == "" || password == "" {
+		return "", "", fmt.Errorf("required env var missing")
 	}
-	if dsn == "" {
-		return "", "", fmt.Errorf("DB_DSN is not set")
-	}
+
+	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, password, host, port, name)
 
 	return driver, dsn, nil
 }

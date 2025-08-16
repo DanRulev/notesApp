@@ -15,7 +15,6 @@ env:
   DB_NAME: test-app1y
   DB_USER: root
   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-  DB_DSN: "postgres://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/${DB_NAME}?sslmode=disable"
 
 jobs:
   linter:

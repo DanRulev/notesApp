@@ -28,7 +28,6 @@ type DBCfg struct {
 	Name     string `mapstructure:"name" validate:"required"`
 	Password string `mapstructure:"password" validate:"required"`
 	SSLMode  string `mapstructure:"sslmode" validate:"required"`
-	DSN      string `mapstructure:"dsn"`
 }
 
 type ServerCfg struct {

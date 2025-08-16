@@ -112,8 +112,6 @@ DB_USER=example
 DB_PASSWORD=example
 DB_SSLMODE=disable
 
-DB_DSN=${DB_DRIVER}://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=${DB_SSLMODE}
-
 AUTH_JTT_SECRET=example
 ```
 
