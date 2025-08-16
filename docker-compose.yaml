@@ -20,5 +20,5 @@ services:
     volumes:
       - ./migrations:/migrations
     depends_on:
-      test-db:
+      db:
         condition: service_healthy

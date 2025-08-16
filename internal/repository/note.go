@@ -106,7 +106,12 @@ func (n *NoteR) Notes(ctx context.Context, userID uuid.UUID, p dto.Paginated) ([
 		)
 		return nil, 0, domain.MakeError(domain.ErrReceiving, err, "notes")
 	}
-	defer rows.Close()
+	defer func() {
+		if closeErr := rows.Close(); closeErr != nil {
+			// Логгируй, если нужно
+			n.log.Error("failed to close rows", zap.Error(closeErr))
+		}
+	}()
 
 	if p.Offset+p.Limit > total {
 		p.Limit = total - p.Offset

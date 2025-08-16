@@ -39,9 +39,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Print Go version
-        run: go version
-
       - name: Download dependencies
         run: go mod download
 
