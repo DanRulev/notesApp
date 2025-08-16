@@ -57,34 +57,28 @@ func getConnectParam() (string, string, error) {
 	v := viper.New()
 	v.AutomaticEnv()
 
-	driver := viper.GetString("DB_DRIVER")
-	host := "localhost"
-	port := viper.GetString("DB_PORT")
-	name := viper.GetString("DB_NAME")
-	user := viper.GetString("DB_USER")
-	password := viper.GetString("DB_PASSWORD")
+	driver := os.Getenv("DB_DRIVER")
+	port := os.Getenv("DB_PORT")
+	name := os.Getenv("DB_NAME")
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
 
 	if driver == "" {
-		return "", "", fmt.Errorf("driver env var missing")
+		return "", "", fmt.Errorf("driver missing")
 	}
-
 	if port == "" {
-		return "", "", fmt.Errorf("port env var missing")
+		return "", "", fmt.Errorf("port missing")
 	}
-
 	if name == "" {
-		return "", "", fmt.Errorf("name env var missing")
+		return "", "", fmt.Errorf("name missing")
 	}
-
 	if user == "" {
-		return "", "", fmt.Errorf("user env var missing")
+		return "", "", fmt.Errorf("user missing")
 	}
-
 	if password == "" {
-		return "", "", fmt.Errorf("password env var missing")
+		return "", "", fmt.Errorf("password missing")
 	}
 
-	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, password, host, port, name)
-
+	dsn := fmt.Sprintf("postgres://%s:%s@localhost:%s/%s?sslmode=disable", user, password, port, name)
 	return driver, dsn, nil
 }
