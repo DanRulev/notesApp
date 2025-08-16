@@ -64,8 +64,24 @@ func getConnectParam() (string, string, error) {
 	user := viper.GetString("DB_USER")
 	password := viper.GetString("DB_PASSWORD")
 
-	if driver == "" || port == "" || name == "" || user == "" || password == "" {
-		return "", "", fmt.Errorf("required env var missing")
+	if driver == "" {
+		return "", "", fmt.Errorf("driver env var missing")
+	}
+
+	if port == "" {
+		return "", "", fmt.Errorf("port env var missing")
+	}
+
+	if name == "" {
+		return "", "", fmt.Errorf("name env var missing")
+	}
+
+	if user == "" {
+		return "", "", fmt.Errorf("user env var missing")
+	}
+
+	if password == "" {
+		return "", "", fmt.Errorf("password env var missing")
 	}
 
 	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, password, host, port, name)
