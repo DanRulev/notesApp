@@ -104,9 +104,9 @@ func Test_userH_userByID(t *testing.T) {
 			r.GET("/profile", func(c *gin.Context) {
 				if tt.name != "missing user_id in context" {
 					c.Set(userIDKey, tt.userID.String())
-					handler.userH.userByID(c)
+					handler.userByID(c)
 				} else {
-					handler.userH.userByID(c)
+					handler.userByID(c)
 				}
 			})
 
@@ -252,9 +252,9 @@ func Test_userH_updateUser(t *testing.T) {
 			r.PUT("/profile", func(c *gin.Context) {
 				if tt.name != "missing user_id in context" {
 					c.Set(userIDKey, tt.userID.String())
-					handler.userH.updateUser(c)
+					handler.updateUser(c)
 				} else {
-					handler.userH.updateUser(c)
+					handler.updateUser(c)
 				}
 			})
 
@@ -380,9 +380,9 @@ func Test_userH_updateUserPass(t *testing.T) {
 			r.PUT("/profile/pass", func(c *gin.Context) {
 				if tt.name != "missing user_id in context" {
 					c.Set(userIDKey, tt.userID.String())
-					handler.userH.updateUserPass(c)
+					handler.updateUserPass(c)
 				} else {
-					handler.userH.updateUserPass(c)
+					handler.updateUserPass(c)
 				}
 			})
 
@@ -445,9 +445,9 @@ func Test_userH_deleteUser(t *testing.T) {
 			r.DELETE("/profile", func(c *gin.Context) {
 				if tt.name != "missing user_id in context" {
 					c.Set(userIDKey, tt.userID.String())
-					handler.userH.deleteUser(c)
+					handler.deleteUser(c)
 				} else {
-					handler.userH.deleteUser(c)
+					handler.deleteUser(c)
 				}
 			})
 

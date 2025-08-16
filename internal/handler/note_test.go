@@ -125,9 +125,9 @@ func Test_noteH_createNote(t *testing.T) {
 			r.POST("/notes", func(c *gin.Context) {
 				if tt.name != "missing user_id in context" {
 					c.Set(userIDKey, tt.userID.String())
-					handler.noteH.createNote(c)
+					handler.createNote(c)
 				} else {
-					handler.noteH.createNote(c)
+					handler.createNote(c)
 				}
 			})
 
@@ -253,9 +253,9 @@ func Test_noteH_notes(t *testing.T) {
 			r.GET("/notes", func(c *gin.Context) {
 				if tt.name != "missing user_id in context" {
 					c.Set(userIDKey, userID.String())
-					handler.noteH.notes(c)
+					handler.notes(c)
 				} else {
-					handler.noteH.notes(c)
+					handler.notes(c)
 				}
 			})
 
@@ -349,9 +349,9 @@ func Test_noteH_note(t *testing.T) {
 			r.GET("/notes/:note_id", func(c *gin.Context) {
 				if tt.name != "missing user_id in context" {
 					c.Set(userIDKey, userID.String())
-					handler.noteH.note(c)
+					handler.note(c)
 				} else {
-					handler.noteH.note(c)
+					handler.note(c)
 				}
 			})
 
@@ -502,9 +502,9 @@ func Test_noteH_updateNote(t *testing.T) {
 			r.PUT("/notes/:note_id", func(c *gin.Context) {
 				if tt.name != "missing user_id in context" {
 					c.Set(userIDKey, userID.String())
-					handler.noteH.updateNote(c)
+					handler.updateNote(c)
 				} else {
-					handler.noteH.updateNote(c)
+					handler.updateNote(c)
 				}
 			})
 
@@ -585,9 +585,9 @@ func Test_noteH_deleteNote(t *testing.T) {
 			r.DELETE("/notes/:note_id", func(c *gin.Context) {
 				if tt.name != "missing user_id in context" {
 					c.Set(userIDKey, userID.String())
-					handler.noteH.deleteNote(c)
+					handler.deleteNote(c)
 				} else {
-					handler.noteH.deleteNote(c)
+					handler.deleteNote(c)
 				}
 			})
 

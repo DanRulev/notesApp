@@ -161,7 +161,7 @@ func Test_authH_signUp(t *testing.T) {
 
 			gin.SetMode(gin.TestMode)
 			r := gin.New()
-			r.POST("/sign-up", handler.authH.signUp)
+			r.POST("/sign-up", handler.signUp)
 
 			w := httptest.NewRecorder()
 			req := httptest.NewRequest("POST", "/sign-up", strings.NewReader(tt.inputBody))
@@ -252,7 +252,7 @@ func Test_authH_signIn(t *testing.T) {
 
 			gin.SetMode(gin.TestMode)
 			r := gin.New()
-			r.POST("/sign-in", handler.authH.signIn)
+			r.POST("/sign-in", handler.signIn)
 
 			w := httptest.NewRecorder()
 			req := httptest.NewRequest("POST", "/sign-in", strings.NewReader(tt.inputBody))
@@ -345,7 +345,7 @@ func Test_authH_logout(t *testing.T) {
 
 			gin.SetMode(gin.TestMode)
 			r := gin.New()
-			r.GET("/logout", handler.authH.logout)
+			r.GET("/logout", handler.logout)
 
 			w := httptest.NewRecorder()
 			req := httptest.NewRequest("GET", "/logout", nil)
@@ -441,7 +441,7 @@ func Test_authH_refresh(t *testing.T) {
 
 			gin.SetMode(gin.TestMode)
 			r := gin.New()
-			r.GET("/refresh", handler.authH.refresh)
+			r.GET("/refresh", handler.refresh)
 
 			w := httptest.NewRecorder()
 			req := httptest.NewRequest("GET", "/refresh", nil)
