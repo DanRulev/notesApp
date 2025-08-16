@@ -38,11 +38,11 @@ func (h *Handler) InitNoteAPIs(api *gin.RouterGroup) {
 	h.log.Info("init notes APIs")
 	note := api.Group("/notes", h.authMiddleware)
 	{
-		note.POST("/", h.noteH.createNote)
-		note.GET("/", h.noteH.notes)
-		note.GET("/:note_id", h.noteH.note)
-		note.PUT("/:note_id", h.noteH.updateNote)
-		note.DELETE("/:note_id", h.noteH.deleteNote)
+		note.POST("/", h.createNote)
+		note.GET("/", h.notes)
+		note.GET("/:note_id", h.note)
+		note.PUT("/:note_id", h.updateNote)
+		note.DELETE("/:note_id", h.deleteNote)
 	}
 }
 

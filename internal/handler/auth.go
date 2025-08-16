@@ -39,10 +39,10 @@ func (h *Handler) InitAuthAPIs(path *gin.RouterGroup) {
 	h.log.Info("init auth APIs")
 	auth := path.Group("/auth")
 	{
-		auth.POST("/sign-up", h.authH.signUp)
-		auth.POST("/sign-in", h.authH.signIn)
-		auth.GET("/logout", h.authH.logout)
-		auth.GET("/refresh", h.authH.refresh)
+		auth.POST("/sign-up", h.signUp)
+		auth.POST("/sign-in", h.signIn)
+		auth.GET("/logout", h.logout)
+		auth.GET("/refresh", h.refresh)
 	}
 
 }

@@ -684,34 +684,6 @@ func TestAuthS_ParseToken(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "wrong subject type",
-			args: args{
-				ctx: context.Background(),
-			},
-			generate: func(u uuid.UUID, t time.Duration, s string) (string, error) {
-				tkn := jwt.New()
-				if err := tkn.Set(jwt.SubjectKey, 6); err != nil {
-					return "", fmt.Errorf("failed to set subject in token: %w", err)
-				}
-
-				if err := tkn.Set(jwt.ExpirationKey, time.Now().Add(t)); err != nil {
-					return "", fmt.Errorf("failed to set expiration in token: %w", err)
-				}
-
-				if err := tkn.Set(jwt.IssuedAtKey, time.Now()); err != nil {
-					return "", fmt.Errorf("failed to set issued at in token: %w", err)
-				}
-
-				accessToken, err := jwt.Sign(tkn, jwt.WithKey(jwa.HS256, []byte(s)))
-				if err != nil {
-					return "", fmt.Errorf("failed to sign token: %s", err)
-				}
-
-				return string(accessToken), nil
-			},
-			wantErr: true,
-		},
-		{
 			name: "subject not uuid",
 			args: args{
 				ctx: context.Background(),

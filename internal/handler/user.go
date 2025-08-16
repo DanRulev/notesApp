@@ -37,10 +37,10 @@ func (h *Handler) InitUserAPIs(path *gin.RouterGroup) {
 	h.log.Info("init user APIs")
 	user := path.Group("/profile", h.authMiddleware)
 	{
-		user.GET("/", h.userH.userByID)
-		user.PUT("/", h.userH.updateUser)
-		user.PUT("/pass", h.userH.updateUserPass)
-		user.DELETE("/", h.userH.deleteUser)
+		user.GET("/", h.userByID)
+		user.PUT("/", h.updateUser)
+		user.PUT("/pass", h.updateUserPass)
+		user.DELETE("/", h.deleteUser)
 	}
 }
 

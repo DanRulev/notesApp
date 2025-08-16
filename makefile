@@ -1,9 +1,9 @@
 docker-up:
-	docker-compose -f docker compose.yaml up -d
+	docker compose -f docker-compose.yaml up -d
 	sleep 10  # ждём healthcheck
 
 docker-down:
-	docker-compose -f docker compose.yaml down || true
+	docker compose -f docker-compose.yaml down || true
 
 mock:
 	mockgen -destination internal/service/mock/repository_mock.go noteApp/internal/service RepositoryI
