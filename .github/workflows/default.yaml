@@ -11,7 +11,7 @@ env:
   AUTH_JWT_SECRET: ${{ secrets.AUTH_JWT_SECRET }}
   DB_DRIVER: postgres
   DB_PORT: 5432
-  CONTAINER_NAME: appraiser-test-db
+  CONTAINER_NAME: notes_app1y
   DB_NAME: test-app1y
   DB_USER: root
   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
