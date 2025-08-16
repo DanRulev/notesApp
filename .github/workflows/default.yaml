@@ -1,0 +1,59 @@
+name: Linter & Tests
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+env:
+  CONFIG_PATH: configs
+  CONFIG_NAME: testing
+  AUTH_JWT_SECRET: ${{ secrets.AUTH_JWT_SECRET }}
+  DB_DRIVER: postgres
+  DB_PORT: 5432
+  CONTAINER_NAME: appraiser-test-db
+  DB_NAME: test-app1y
+  DB_USER: root
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_DSN: "postgres://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/${DB_NAME}?sslmode=disable"
+
+jobs:
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v8
+        with:
+          version: v2.1
+
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: stable
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Print Go version
+        run: go version
+
+      - name: Download dependencies
+        run: go mod download
+
+      - name: Start docker
+        run: make docker-up
+
+      - name: Run tests
+        run: make test
+
+      - name: Stop docker
+        run: make docker-down
+
+      - name: Check formatting
+        run: |
+          gofmt -l . | grep . && echo "gofmt found unformatted files" && exit 1 || true
