@@ -17,6 +17,12 @@ func initConfig() (config.AuthCfg, error) {
 	v := viper.New()
 	v.AutomaticEnv()
 
+	jwtSecret := v.GetString("AUTH_JWT_SECRET")
+
+	if jwtSecret == "" {
+		return config.AuthCfg{}, fmt.Errorf("jwt secret is not set")
+	}
+
 	v.AddConfigPath("../../configs")
 	v.SetConfigName("testing")
 
@@ -27,12 +33,6 @@ func initConfig() (config.AuthCfg, error) {
 	var cfg config.AuthCfg
 	if err := v.UnmarshalKey("auth", &cfg); err != nil {
 		return config.AuthCfg{}, err
-	}
-
-	jwtSecret := v.GetString("AUTH_JTT_SECRET")
-
-	if jwtSecret == "" {
-		return config.AuthCfg{}, fmt.Errorf("jwt secret is not set")
 	}
 
 	cfg.JwtSecret = jwtSecret
