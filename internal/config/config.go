@@ -104,15 +104,39 @@ func loadViper() (*viper.Viper, error) {
 		return nil, fmt.Errorf("failed to read config: %w", err)
 	}
 
-	v.BindEnv("db.conn.driver", "DB_CONN_DRIVER")
-	v.BindEnv("db.conn.host", "DB_CONN_HOST")
-	v.BindEnv("db.conn.port", "DB_CONN_PORT")
-	v.BindEnv("db.conn.user", "DB_CONN_USER")
-	v.BindEnv("db.conn.password", "DB_CONN_PASSWORD")
-	v.BindEnv("db.conn.name", "DB_CONN_NAME")
-	v.BindEnv("db.conn.ssl", "DB_CONN_SSL")
+	err := v.BindEnv("db.conn.driver", "DB_CONN_DRIVER")
+	if err != nil {
+		return nil, fmt.Errorf("fail bind DB_CONN_DRIVER: %w", err)
+	}
+	err = v.BindEnv("db.conn.host", "DB_CONN_HOST")
+	if err != nil {
+		return nil, fmt.Errorf("fail bind DB_CONN_HOST: %w", err)
+	}
+	err = v.BindEnv("db.conn.port", "DB_CONN_PORT")
+	if err != nil {
+		return nil, fmt.Errorf("fail bind DB_CONN_PORT: %w", err)
+	}
+	err = v.BindEnv("db.conn.user", "DB_CONN_USER")
+	if err != nil {
+		return nil, fmt.Errorf("fail bind DB_CONN_USER: %w", err)
+	}
+	err = v.BindEnv("db.conn.password", "DB_CONN_PASSWORD")
+	if err != nil {
+		return nil, fmt.Errorf("fail bind DB_CONN_PASSWORD: %w", err)
+	}
+	err = v.BindEnv("db.conn.name", "DB_CONN_NAME")
+	if err != nil {
+		return nil, fmt.Errorf("fail bind DB_CONN_NAME: %w", err)
+	}
+	err = v.BindEnv("db.conn.ssl", "DB_CONN_SSL")
+	if err != nil {
+		return nil, fmt.Errorf("fail bind DB_CONN_SSL: %w", err)
+	}
 
-	v.BindEnv("auth.jwt_secret", "AUTH_JWT_SECRET")
+	err = v.BindEnv("auth.jwt_secret", "AUTH_JWT_SECRET")
+	if err != nil {
+		return nil, fmt.Errorf("fail bind AUTH_JWT_SECRET: %w", err)
+	}
 
 	return v, nil
 }
