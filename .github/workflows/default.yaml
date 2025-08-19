@@ -12,7 +12,7 @@ on:
       - "!develop"
 
 env:
-  CONFIG_NAME: testing
+  CONFIG_NAME: testing1
   AUTH_JWT_SECRET: ${{ secrets.AUTH_JWT_SECRET }}
   DB_DRIVER: postgres
   DB_PORT: 5432
