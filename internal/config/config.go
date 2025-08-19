@@ -38,8 +38,8 @@ type DBConn struct {
 type DBCfg struct {
 	MaxOpenConns    int           `mapstructure:"max_open_conns" validate:"min=1,max=1000"`
 	MaxIdleConns    int           `mapstructure:"max_idle_conns" validate:"min=0,max=100"`
-	ConnMaxLifeTime time.Duration `mapstructure:"conn_max_life_time" validate:"min=0"`
-	ConnMaxIdleTime time.Duration `mapstructure:"conn_max_idle_time" validate:"min=0"`
+	ConnMaxLifeTime time.Duration `mapstructure:"max_life_time" validate:"min=0"`
+	ConnMaxIdleTime time.Duration `mapstructure:"max_idle_time" validate:"min=0"`
 }
 
 type ServerCfg struct {
@@ -104,38 +104,38 @@ func loadViper() (*viper.Viper, error) {
 		return nil, fmt.Errorf("failed to read config: %w", err)
 	}
 
-	err := v.BindEnv("db.conn.driver", "DB_CONN_DRIVER")
+	err := v.BindEnv("db.conn.driver", "DB_DRIVER")
 	if err != nil {
-		return nil, fmt.Errorf("fail bind DB_CONN_DRIVER: %w", err)
+		return nil, fmt.Errorf("fail bind DB_DRIVER: %w", err)
 	}
-	err = v.BindEnv("db.conn.host", "DB_CONN_HOST")
+	err = v.BindEnv("db.conn.host", "DB_HOST")
 	if err != nil {
-		return nil, fmt.Errorf("fail bind DB_CONN_HOST: %w", err)
+		return nil, fmt.Errorf("fail bind DB_HOST: %w", err)
 	}
-	err = v.BindEnv("db.conn.port", "DB_CONN_PORT")
+	err = v.BindEnv("db.conn.port", "DB_PORT")
 	if err != nil {
-		return nil, fmt.Errorf("fail bind DB_CONN_PORT: %w", err)
+		return nil, fmt.Errorf("fail bind DB_PORT: %w", err)
 	}
-	err = v.BindEnv("db.conn.user", "DB_CONN_USER")
+	err = v.BindEnv("db.conn.user", "DB_USER")
 	if err != nil {
-		return nil, fmt.Errorf("fail bind DB_CONN_USER: %w", err)
+		return nil, fmt.Errorf("fail bind DB_USER: %w", err)
 	}
-	err = v.BindEnv("db.conn.password", "DB_CONN_PASSWORD")
+	err = v.BindEnv("db.conn.password", "DB_PASSWORD")
 	if err != nil {
-		return nil, fmt.Errorf("fail bind DB_CONN_PASSWORD: %w", err)
+		return nil, fmt.Errorf("fail bind DB_PASSWORD: %w", err)
 	}
-	err = v.BindEnv("db.conn.name", "DB_CONN_NAME")
+	err = v.BindEnv("db.conn.name", "DB_NAME")
 	if err != nil {
-		return nil, fmt.Errorf("fail bind DB_CONN_NAME: %w", err)
+		return nil, fmt.Errorf("fail bind DB_NAME: %w", err)
 	}
-	err = v.BindEnv("db.conn.ssl", "DB_CONN_SSL")
+	err = v.BindEnv("db.conn.ssl", "DB_SSL")
 	if err != nil {
-		return nil, fmt.Errorf("fail bind DB_CONN_SSL: %w", err)
+		return nil, fmt.Errorf("fail bind DB_SSL: %w", err)
 	}
 
-	err = v.BindEnv("auth.jwt_secret", "AUTH_JWT_SECRET")
+	err = v.BindEnv("auth.jwt_secret", "JWT_SECRET")
 	if err != nil {
-		return nil, fmt.Errorf("fail bind AUTH_JWT_SECRET: %w", err)
+		return nil, fmt.Errorf("fail bind JWT_SECRET: %w", err)
 	}
 
 	return v, nil

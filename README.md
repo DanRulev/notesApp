@@ -70,49 +70,52 @@ cp configs/config.yaml
 
 **Example:**
 ```yaml
+logger:
+  level: info
+  development: false
+  disable_caller: false
+  disable_stacktrace: false
+  encoding: console
+  output_paths: [stdout]
+  error_output_paths: [stderr]
+
 server:
-  port: ":8080"
-  read_timeout: 10s
-  write_timeout: 10s
-  shutdown_timeout: 15s
+  host: localhost
+  port: 8080
+  read_timeout: 60s
+  write_timeout: 60s
+  idle_timeout: 60s
+  max_header_bytes: 1048576
+  shutdown_timeout: 5s
 
 db:
-  host: "localhost"
-  port: 5432
-  user: "root"
-  password: "px40w1!oEn"
-  name: "notesApp"
-  sslmode: "disable"
+  cfg:
+    max_open_conns: 10
+    max_idle_conns: 5
+    conn_max_life_time: 30m
+    conn_max_idle_time: 10m
 
 auth:
-  access_token_ttl: "15m"
-  refresh_token_ttl: "720h" # 30 days
-
-logger:
-  environment: "development"
-  level: "debug"
-  encoding: "console"
-  output_paths: ["stdout"]
-  error_output_paths: ["stderr"]
+  access_token_ttl: 240h
+  refresh_token_ttl: 720h
 ```
 
 **Make .env file**
 **Example**
 ```.env
-CONFIG_PATH=example
-CONFIG_NAME=example
+CONFIG_NAME=testing
 
 CONTAINER_NAME=example
 
 DB_DRIVER=postgres
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=example
 DB_USER=example
+DB_NAME=example
 DB_PASSWORD=example
-DB_SSLMODE=disable
+DB_SSL=disable
 
-AUTH_JTT_SECRET=example
+JWT_SECRET=example
 ```
 
 ---
@@ -189,20 +192,19 @@ This:
 
 ## 🧰 Makefile Commands
 
-| Command           | Description                                      |
-|-------------------|--------------------------------------------------|
-| `make start`      | Start app + DB + migrations + server             |
-| `make stop`       | Stop DB and clean up                             |
-| `make run`        | Run server only (DB must be up)                  |
-| `make migrate-up` | Apply DB migrations                              |
-| `make migrate-down` | Roll back migrations                           |
-| `make test-start` | Full test cycle (DB, migrate, test, cleanup)     |
-| `make mock`       | Generate mocks for interfaces                    |
+| Command             | Description                                                           |
+|---------------------| ----------------------------------------------------------------------|
+| `make docker-up`    | Build and start all services (DB, API, etc.) in detached mode         |
+| `make docker-down`  | Stop and remove all services defined in docker-compose.yaml           |
+| `make start`        | Start the full stack: launch services via Docker, then run the Go app |
+| `make run`          | Run the Go application directly (for local development)               |
+| `make test`         | Run all Go tests with verbose output and coverage (DB must be up)     |
+| `make mock`         | Generate mock implementations for interfaces using mockgen            |
 
 ---
 
 🔄 CI/CD (GitHub Actions)
-The `.github/workflows/ci.yml` runs on every `push`/`pull_request` to `main`/`master`:
+The `.github/workflows/default.yml` runs on every `push`/`pull_request` to `main`/`master`:
 
 ✅ Checkout
 ✅ Setup Go

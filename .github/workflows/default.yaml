@@ -3,13 +3,12 @@ name: Linter & Tests
 on:
   push:
     branches:
-      - "**"
+      - "main"
+      - "master"
   pull_request:
     branches:
-      - "**"
-      - "!main"
-      - "!master"
-      - "!develop"
+      - "main"
+      - "master"
 
 env:
   CONFIG_NAME: testing1

@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:latest
+    image: postgres:15
     container_name: ${CONTAINER_NAME}
     environment:
       POSTGRES_DB: ${DB_NAME}
@@ -13,12 +13,42 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - app-network
 
   migrate:
     image: migrate/migrate:v4.18.2
+    container_name: ${CONTAINER_NAME}_migrate
     command: ["-path", "/migrations", "-database", "postgres://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}?sslmode=disable", "up"]
     volumes:
       - ./migrations:/migrations
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - app-network
+
+  api:
+    build: .                   
+    container_name: ${CONTAINER_NAME}_api
+    environment:
+      CONFIG_NAME: ${CONFIG_NAME}
+      DB_DRIVER: ${DB_DRIVER}
+      DB_HOST: db               
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_NAME: ${DB_NAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      AUTH_JWT_SECRET: ${AUTH_JWT_SECRET}
+    ports:
+      - "8080:8080"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
