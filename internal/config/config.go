@@ -20,14 +20,26 @@ type LoggerCfg struct {
 	ErrorOutputPaths  []string `mapstructure:"error_output_paths"`
 }
 
-type DBCfg struct {
+type DBConfig struct {
+	Conn DBConn `mapstructure:"conn"`
+	Cfg  DBCfg  `mapstructure:"cfg"`
+}
+
+type DBConn struct {
 	Driver   string `mapstructure:"driver" validate:"required"`
 	Host     string `mapstructure:"host" validate:"required"`
 	Port     string `mapstructure:"port" validate:"required"`
 	User     string `mapstructure:"user" validate:"required"`
-	Name     string `mapstructure:"name" validate:"required"`
 	Password string `mapstructure:"password" validate:"required"`
-	SSLMode  string `mapstructure:"sslmode" validate:"required"`
+	Name     string `mapstructure:"name" validate:"required"`
+	SSL      string `mapstructure:"ssl" validate:"oneof=disable require verify-full"`
+}
+
+type DBCfg struct {
+	MaxOpenConns    int           `mapstructure:"max_open_conns" validate:"min=1,max=1000"`
+	MaxIdleConns    int           `mapstructure:"max_idle_conns" validate:"min=0,max=100"`
+	ConnMaxLifeTime time.Duration `mapstructure:"conn_max_life_time" validate:"min=0"`
+	ConnMaxIdleTime time.Duration `mapstructure:"conn_max_idle_time" validate:"min=0"`
 }
 
 type ServerCfg struct {
@@ -48,7 +60,7 @@ type AuthCfg struct {
 
 type Config struct {
 	Auth   AuthCfg   `mapstructure:"auth"`
-	DB     DBCfg     `mapstructure:"db"`
+	DB     DBConfig  `mapstructure:"db"`
 	Server ServerCfg `mapstructure:"server"`
 	Logger LoggerCfg `mapstructure:"logger"`
 }
@@ -91,6 +103,16 @@ func loadViper() (*viper.Viper, error) {
 	if err := v.ReadInConfig(); err != nil {
 		return nil, fmt.Errorf("failed to read config: %w", err)
 	}
+
+	v.BindEnv("db.conn.driver", "DB_CONN_DRIVER")
+	v.BindEnv("db.conn.host", "DB_CONN_HOST")
+	v.BindEnv("db.conn.port", "DB_CONN_PORT")
+	v.BindEnv("db.conn.user", "DB_CONN_USER")
+	v.BindEnv("db.conn.password", "DB_CONN_PASSWORD")
+	v.BindEnv("db.conn.name", "DB_CONN_NAME")
+	v.BindEnv("db.conn.ssl", "DB_CONN_SSL")
+
+	v.BindEnv("auth.jwt_secret", "AUTH_JWT_SECRET")
 
 	return v, nil
 }

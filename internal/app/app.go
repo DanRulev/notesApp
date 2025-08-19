@@ -37,14 +37,7 @@ func Start() {
 		zap.Bool("development", cfg.Logger.Development),
 	)
 
-	zapLogger.Info("config loaded",
-		zap.String("server_port", cfg.Server.Port),
-		zap.Duration("shutdown_timeout", cfg.Server.ShutdownTimeout),
-		zap.Duration("access_ttl", cfg.Auth.AccessTokenTTL),
-		zap.Duration("refresh_ttl", cfg.Auth.RefreshTokenTTL),
-		zap.String("db_host", cfg.DB.Host),
-		zap.String("db_port", cfg.DB.Port),
-	)
+	zapLogger.Info("config loaded")
 
 	zapLogger.Info("connecting to database...")
 	dbConn, closeDB, err := db.New(cfg.DB)
@@ -64,7 +57,7 @@ func Start() {
 	}()
 
 	zapLogger.Info("database connected successfully",
-		zap.String("database", cfg.DB.Name),
+		zap.String("database", cfg.DB.Conn.Name),
 	)
 
 	zapLogger.Info("initializing repositories")

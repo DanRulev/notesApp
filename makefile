@@ -13,4 +13,10 @@ mock:
 test:
 	go test -v -cover ./...
 
-.PHONY: docker-up docker-down test mock
+start: docker-up
+
+run:
+	go run ./cmd
+
+
+.PHONY: docker-up docker-down test mock start run

@@ -2,16 +2,21 @@ name: Linter & Tests
 
 on:
   push:
+    branches:
+      - "**"
   pull_request:
-    branches: [ "main", "master" ]
+    branches:
+      - "**"
+      - "!main"
+      - "!master"
+      - "!develop"
 
 env:
-  CONFIG_PATH: configs
   CONFIG_NAME: testing
   AUTH_JWT_SECRET: ${{ secrets.AUTH_JWT_SECRET }}
   DB_DRIVER: postgres
   DB_PORT: 5432
-  CONTAINER_NAME: notes_app1y
+  CONTAINER_NAME: notes_app1y_test
   DB_NAME: test-app1y
   DB_USER: root
   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
@@ -44,13 +49,15 @@ jobs:
         run: make docker-up
 
       - name: Run tests
-        run: |
-          export DB_DRIVER=${{ env.DB_DRIVER }}
-          export DB_PORT=${{ env.DB_PORT }}
-          export DB_NAME=${{ env.DB_NAME }}
-          export DB_USER=${{ env.DB_USER }}
-          export DB_PASSWORD=${{ env.DB_PASSWORD }}
-          make test
+        env:  
+          CONFIG_NAME: testing
+          DB_DRIVER: ${{ env.DB_DRIVER }}
+          DB_PORT: ${{ env.DB_PORT }}
+          DB_NAME: ${{ env.DB_NAME }}
+          DB_USER: ${{ env.DB_USER }}
+          DB_PASSWORD: ${{ env.DB_PASSWORD }}
+          AUTH_JWT_SECRET: ${{ secrets.AUTH_JWT_SECRET }}
+        run: make test
 
       - name: Stop docker
         run: make docker-down

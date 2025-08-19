@@ -16,6 +16,13 @@ server:
   max_header_bytes: 1048576
   shutdown_timeout: 5s
 
+db:
+  cfg:
+    max_open_conns: 10
+    max_idle_conns: 5
+    conn_max_life_time: 30m
+    conn_max_idle_time: 10m
+
 auth:
   access_token_ttl: 240h
   refresh_token_ttl: 720h
