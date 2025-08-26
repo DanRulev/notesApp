@@ -1,8 +1,8 @@
 logger:
   level: info
-  development: false
-  disable_caller: false
-  disable_stacktrace: false
+  development: true
+  disable_caller: true
+  disable_stacktrace: true
   encoding: console
   output_paths: [stdout]
   error_output_paths: [stderr]
