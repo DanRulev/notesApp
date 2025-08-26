@@ -25,7 +25,7 @@ jobs:
   tests:
     env:
       CONFIG_NAME: testing1
-      AUTH_JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
       DB_DRIVER: postgres
       DB_PORT: 5432
       CONTAINER_NAME: notes_app1y_test
