@@ -80,7 +80,7 @@ func InitConfig() (*Config, error) {
 		return nil, err
 	}
 
-	return cfg, err
+	return cfg, nil
 }
 
 func loadViper() (*viper.Viper, error) {
@@ -99,10 +99,6 @@ func loadViper() (*viper.Viper, error) {
 
 	v.AddConfigPath("configs")
 	v.SetConfigName(configName)
-
-	if err := v.ReadInConfig(); err != nil {
-		return nil, fmt.Errorf("failed to read config: %w", err)
-	}
 
 	err := v.BindEnv("db.conn.driver", "DB_DRIVER")
 	if err != nil {
@@ -136,6 +132,10 @@ func loadViper() (*viper.Viper, error) {
 	err = v.BindEnv("auth.jwt_secret", "JWT_SECRET")
 	if err != nil {
 		return nil, fmt.Errorf("fail bind JWT_SECRET: %w", err)
+	}
+
+	if err := v.ReadInConfig(); err != nil {
+		return nil, fmt.Errorf("failed to read config: %w", err)
 	}
 
 	return v, nil

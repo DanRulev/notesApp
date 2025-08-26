@@ -192,14 +192,17 @@ This:
 
 ## 🧰 Makefile Commands
 
-| Command             | Description                                                           |
-|---------------------| ----------------------------------------------------------------------|
-| `make docker-up`    | Build and start all services (DB, API, etc.) in detached mode         |
-| `make docker-down`  | Stop and remove all services defined in docker-compose.yaml           |
-| `make start`        | Start the full stack: launch services via Docker, then run the Go app |
-| `make run`          | Run the Go application directly (for local development)               |
-| `make test`         | Run all Go tests with verbose output and coverage (DB must be up)     |
-| `make mock`         | Generate mock implementations for interfaces using mockgen            |
+| Command             | Description                                                                                |
+|---------------------| -------------------------------------------------------------------------------------------|
+| `make docker-up`    | # Starts all services defined in docker-compose.yaml in detached mode                      |
+| `make docker-down`  | Stops and removes all containers, networks, and volumes defined in docker-compose.yaml     |
+| `make docker-logs`  | Streams logs from all services in real time (follow mode)                                  |
+| `make docker-build` | Builds or rebuilds the Docker images for all services defined in docker-compose.yaml       |
+| `docker restart`    | Restarts the entire stack: stops containers, rebuilds images, then starts services         |
+| `make test-start`   | Runs integration or end-to-end tests: starts Docker services, runs tests, then shuts down. |
+| `make run`          | Run the Go application directly (for local development)                                    |
+| `make test`         | Run all Go tests with verbose output and coverage (DB must be up)                          |
+| `make mock`         | Generate mock implementations for interfaces using mockgen                                 |
 
 ---
 
