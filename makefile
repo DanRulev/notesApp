@@ -1,6 +1,5 @@
 docker-up:
 	docker compose -f docker-compose.yaml up -d
-	sleep 10  # ждём healthcheck
 
 docker-down:
 	docker compose -f docker-compose.yaml down || true
