@@ -473,6 +473,8 @@ func TestAuthS_generateAndSaveTokens(t *testing.T) {
 }
 
 func TestAuthS_generateTokens(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		userID uuid.UUID
 	}
