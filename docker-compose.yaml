@@ -39,7 +39,8 @@ services:
       DB_USER: ${DB_USER}
       DB_NAME: ${DB_NAME}
       DB_PASSWORD: ${DB_PASSWORD}
-      AUTH_JWT_SECRET: ${JWT_SECRET}
+      DB_SSL: ${DB_SSL}
+      JWT_SECRET: ${JWT_SECRET}
     ports:
       - "8080:8080"
     depends_on:
