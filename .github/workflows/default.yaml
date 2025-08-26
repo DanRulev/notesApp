@@ -3,22 +3,14 @@ name: Linter & Tests
 on:
   push:
     branches:
-      - "main"
-      - "master"
+      - "**"
+      - "!main"
+      - "!master"
   pull_request:
     branches:
-      - "main"
-      - "master"
-
-env:
-  CONFIG_NAME: testing1
-  AUTH_JWT_SECRET: ${{ secrets.AUTH_JWT_SECRET }}
-  DB_DRIVER: postgres
-  DB_PORT: 5432
-  CONTAINER_NAME: notes_app1y_test
-  DB_NAME: test-app1y
-  DB_USER: root
-  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      - "**"
+      - "!main"
+      - "!master"
 
 jobs:
   linter:
@@ -31,6 +23,15 @@ jobs:
           version: v2.1
 
   tests:
+    env:
+      CONFIG_NAME: testing1
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      DB_DRIVER: postgres
+      DB_PORT: 5432
+      CONTAINER_NAME: notes_app1y_test
+      DB_NAME: test-app1y
+      DB_USER: root
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
     runs-on: ubuntu-latest
     steps:
       - name: Set up Go
@@ -48,14 +49,6 @@ jobs:
         run: make docker-up
 
       - name: Run tests
-        env:  
-          CONFIG_NAME: testing
-          DB_DRIVER: ${{ env.DB_DRIVER }}
-          DB_PORT: ${{ env.DB_PORT }}
-          DB_NAME: ${{ env.DB_NAME }}
-          DB_USER: ${{ env.DB_USER }}
-          DB_PASSWORD: ${{ env.DB_PASSWORD }}
-          AUTH_JWT_SECRET: ${{ secrets.AUTH_JWT_SECRET }}
         run: make test
 
       - name: Stop docker

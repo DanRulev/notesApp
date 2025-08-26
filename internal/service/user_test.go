@@ -231,6 +231,8 @@ func TestUserS_UserByID(t *testing.T) {
 }
 
 func TestUserS_UpdateUser(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		ctx  context.Context
 		user dto.UserUpdate
@@ -350,6 +352,8 @@ func TestUserS_UpdateUser(t *testing.T) {
 }
 
 func TestUserS_DeleteUser(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		ctx context.Context
 		id  uuid.UUID

@@ -17,7 +17,7 @@ func initConfig() (config.AuthCfg, error) {
 	v := viper.New()
 	v.AutomaticEnv()
 
-	jwtSecret := v.GetString("AUTH_JWT_SECRET")
+	jwtSecret := v.GetString("JWT_SECRET")
 
 	if jwtSecret == "" {
 		return config.AuthCfg{}, fmt.Errorf("jwt secret is not set")

@@ -14,6 +14,8 @@ import (
 )
 
 func TestNoteR_CreateNote(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		ctx  context.Context
 		note domain.Note
@@ -594,6 +596,8 @@ func TestNoteR_DeleteNote(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			tx, err := globalTestDB.BeginTxx(context.Background(), nil)
 			require.NoError(t, err)
 			t.Cleanup(func() { _ = tx.Rollback() })

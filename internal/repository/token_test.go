@@ -108,6 +108,8 @@ func TestTokenR_CreateToken(t *testing.T) {
 }
 
 func TestTokenR_Token(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		ctx     context.Context
 		tokenID string
